@@ -2,7 +2,7 @@ pandas
 numpy
 sentence-transformers
 scikit-learn
-pinecone-client
+pinecone
 snowflake-connector-python
 flask
 openai

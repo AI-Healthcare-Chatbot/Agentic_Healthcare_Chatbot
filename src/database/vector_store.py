@@ -24,24 +24,26 @@ class MetadataVectorizer:
         """
         # Specify the spec
         spec = ServerlessSpec(
-            cloud='gcp',
-            region='us-central1'
+            cloud='aws',
+            region='us-east-1'
         )
         
-        # Check if index exists and delete if necessary
         existing_indexes = [index.name for index in self.pc.list_indexes()]
-        if index_name in existing_indexes:
-            self.pc.delete_index(index_name)
-        
-        # Create new index
-        self.pc.create_index(
-            name=index_name,
-            dimension=384,  # Embedding dimension
-            metric='cosine',
-            spec=spec  # Add the spec argument
-        )
-        
-        # Get the index
+
+        if index_name not in existing_indexes:
+            self.pc.create_index(
+                name=index_name,
+                dimension=384,
+                metric='cosine',
+                spec=spec
+            )
+
+            # Wait for readiness
+            import time
+            while not self.pc.describe_index(index_name).status['ready']:
+                print("⏳ Waiting for index to be ready...")
+                time.sleep(1)
+
         return self.pc.Index(index_name)
 
     # ... rest of the code remains the same
@@ -108,32 +110,64 @@ def main():
     # Load metadata
     metadata_file_path = os.getenv('METADATA_FILE_PATH', 'Data/metadata/healthcare_metadata.xlsx')
     metadata_df = pd.read_excel(os.path.abspath(metadata_file_path))
-    
+
     # Initialize vectorizer
     vectorizer = MetadataVectorizer()
-    
+
     # Create index
     index = vectorizer.create_metadata_index()
-    
+
     # Prepare embeddings
     prepared_df, embeddings = vectorizer.prepare_metadata_embeddings(metadata_df)
-    
+
     # Upload to Pinecone
     vectorizer.upload_to_pinecone(index, prepared_df, embeddings)
-    
-    # Test query
-    results = vectorizer.query_metadata(index, test_query)
+
+    # Print index stats
+    print("Index Stats:")
+    print(index.describe_index_stats())
+
+    # DEBUG: Print a sample embedded vector
+    print("\nSample vector embedding length:", len(embeddings[0]))
+    print("Sample combined text:\n", prepared_df['combined_text'].iloc[0])
+
+    # Define your test query
+    test_query = "Total estimated cost for the discharge"
+
+    # DEBUG: Print query vector length
+    query_embedding = vectorizer.embedding_model.encode([test_query])[0].tolist()
+    print("\nQuery vector length:", len(query_embedding))
+
+    # Run query
+    results = index.query(
+        vector=query_embedding,
+        top_k=5,
+        include_metadata=True
+    )
+
+    # DEBUG: Print raw result
+    print("\nRAW QUERY RESULT:")
+    print(results)
+
+    # Show final matches
     print("\nQuery Results:")
     display_query_results(results)
+    
 def display_query_results(results):
     """
     Helper function to display query results
     """
-    print("\nQuery Results:")
-    for match in results['matches']:
-        print(f"Column: {match['metadata']['column_name']}")
-        print(f"Description: {match['metadata']['description']}")
-        print(f"Similarity Score: {match['score']}\n")
+    if not results['matches']:
+        print("No matches found.")
+        return
+
+    print("\nTop Matches:")
+    for i, match in enumerate(results['matches'], start=1):
+        print(f"{i}. Column: {match['metadata']['column_name']}")
+        print(f"   Description: {match['metadata']['description']}")
+        print(f"   API Field: {match['metadata']['api_field_name']}")
+        print(f"   Similarity Score: {match['score']:.4f}\n")
+
 
 if __name__ == "__main__":
     main()
