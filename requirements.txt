@@ -1,0 +1,14 @@
+pandas
+numpy
+sentence-transformers
+scikit-learn
+pinecone-client
+snowflake-connector-python
+flask
+openai
+tiktoken
+python-dotenv
+loguru
+pytest
+matplotlib
+seaborn
