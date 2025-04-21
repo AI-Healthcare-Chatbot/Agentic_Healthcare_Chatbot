@@ -1,0 +1,46 @@
+├── backend
+│       .env
+│       app.py
+│       class_memory.py
+│       gen_color_plot.py
+│       requirements.txt
+│       snowflake_connector.py
+│       snowflake_data_load.py
+│       web_search_handler.py
+├── frontend
+│   ├── public
+│   │       index.html
+│   │       manifest.json
+│   ├── src
+│   │   ├── components
+│   │   │       ChatContainer.jsx
+│   │   │       ChatInput.jsx
+│   │   │       ChatMessage.jsx
+│   │   │       Header.jsx
+│   │   │       PlotViewer.jsx
+│   │   ├── services
+│   │   │       api.js
+│   │   ├── styles
+│   │   │       App.css
+│   │   │       index.css
+│   │       App.jsx
+│   │       index.jsx
+│   │       reportWebVitals.js
+│   │       utils.js
+│       .env
+│       package-lock.json
+│       package.json
+├── vector
+│   ├── database
+│   │       vector_store.py
+│   ├── utils
+│   │       Metadata.py
+    .DS_Store
+    .env
+    .gitignore
+    ai_agentSM.py
+    Data_cleaning.ipynb
+    gen_plot.py
+    my_tree_structure.txt
+    project-readme.md
+    vector_search_agent.py
