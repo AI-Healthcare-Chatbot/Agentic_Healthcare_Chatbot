@@ -1,5 +1,3 @@
-# snowflake_connector.py
-
 from sqlalchemy import create_engine, text
 from urllib.parse import quote_plus
 import os

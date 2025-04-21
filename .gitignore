@@ -53,3 +53,11 @@ data/processed/
 Thumbs.db
 
 Data/
+
+# Dependency directories
+node_modules/
+frontend/node_modules/
+backend/__pycache__/
+# Generated plots
+plots/
+backend/plots/
