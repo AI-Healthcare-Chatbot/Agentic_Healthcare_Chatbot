@@ -63,3 +63,4 @@ plots/
 backend/plots/
 
 project_tree.py
+.vercel
