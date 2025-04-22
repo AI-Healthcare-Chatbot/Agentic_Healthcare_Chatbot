@@ -61,3 +61,5 @@ backend/__pycache__/
 # Generated plots
 plots/
 backend/plots/
+
+project_tree.py

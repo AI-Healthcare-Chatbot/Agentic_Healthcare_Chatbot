@@ -403,11 +403,11 @@ class HealthcareDataAgenticAssistant:
                     print(f"✅ Plot generated successfully: {plot_result}")
                     
                     # Try to display the plot
-                    try:
-                        if os.path.exists(plot_result):
-                            subprocess.Popen(['open', plot_result], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-                    except Exception as e:
-                        print(f"⚠️ Could not open plot file: {e}")
+                    # try:
+                    #     if os.path.exists(plot_result):
+                    #         subprocess.Popen(['open', plot_result], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+                    # except Exception as e:
+                    #     print(f"⚠️ Could not open plot file: {e}")
                     
                     return f"✅ Plot generated successfully: {plot_result}"
                 else:
