@@ -1,22 +1,48 @@
-version: "3.9"
+version: '3.8'
 
 services:
-  backend:
-    build:
-      context: ./backend
-    container_name: healthcare-backend
-    ports:
-      - "8000:8000"
-    env_file:
-      - ./backend/.env
-    volumes:
-      - ./backend:/app
-
+  # Frontend Service
   frontend:
     build:
       context: ./frontend
-    container_name: healthcare-frontend
+      dockerfile: Dockerfile
     ports:
-      - "3000:80"
-    stdin_open: true
-    tty: true
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - healthcare-network
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./backend/plots:/app/plots
+    environment:
+      - SNOWFLAKE_USER=${SNOWFLAKE_USER}
+      - SNOWFLAKE_PASSWORD=${SNOWFLAKE_PASSWORD}
+      - SNOWFLAKE_ACCOUNT=${SNOWFLAKE_ACCOUNT}
+      - SNOWFLAKE_DATABASE=${SNOWFLAKE_DATABASE}
+      - SNOWFLAKE_SCHEMA=${SNOWFLAKE_SCHEMA}
+      - SNOWFLAKE_WAREHOUSE=${SNOWFLAKE_WAREHOUSE}
+      - SNOWFLAKE_ROLE=${SNOWFLAKE_ROLE}
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - PINECONE_INDEX_NAME=${PINECONE_INDEX_NAME}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    networks:
+      - healthcare-network
+
+networks:
+  healthcare-network:
+    driver: bridge
