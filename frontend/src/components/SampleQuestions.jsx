@@ -20,7 +20,7 @@ const SampleQuestions = () => {
         "Create a pie chart of patient demographics by age group",
         "Generate a bar chart of the most common diagnoses",
         "Plot the average cost by hospital type",
-        "Visualize the distribution of severity levels across different age groups"
+        "Plot the Covid19 patient based on region with count"
       ]
     },
     {

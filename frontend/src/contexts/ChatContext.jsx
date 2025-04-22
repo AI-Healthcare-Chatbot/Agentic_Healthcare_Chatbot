@@ -68,32 +68,29 @@ export const ChatProvider = ({ children }) => {
     };
   }, [clientId]);
 
-  // Load conversation history
+  // Reset chat on page refresh (this runs only once on component mount)
   useEffect(() => {
-    const loadHistory = async () => {
-      try {
-        const history = await chatAPI.getHistory();
-        if (history && history.length > 0) {
-          const formattedMessages = history.map(msg => ({
-            id: uuidv4(),
-            role: msg.role === 'Human' ? 'user' : 'assistant',
-            content: msg.message
-          }));
-          setMessages(formattedMessages);
-        }
-      } catch (error) {
-        console.error('Error loading history:', error);
-      }
+    // Clear chat messages on page load/refresh
+    resetConversation();
+    
+    // Optional: Add event listener for page refresh/reload
+    const handleBeforeUnload = () => {
+      // This won't affect the next session, but it's good practice for cleanup
+      localStorage.removeItem('chatHistory');
     };
-
-    loadHistory();
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, []);
 
   // Function to check for plot in message and update message
   const checkForPlotInMessage = async (message) => {
     try {
       // Look for both Windows and Unix style paths
-      const plotRegex = /Plot generated successfully: (.+\.png)/;
+      const plotRegex = /plots[\\\/]([a-zA-Z0-9_-]+\.png)/;
       const match = plotRegex.exec(message.content);
       
       if (match) {
