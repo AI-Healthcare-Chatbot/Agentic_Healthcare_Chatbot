@@ -26,7 +26,8 @@ const ChatBox = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Healthcare Chatbot</h3>
               <p className="max-w-md mb-8">
-                Ask me questions about healthcare data, diagnoses, procedures, or medical information. I can generate visualizations and provide detailed insights.
+                Ask me questions about healthcare data (New York Patient Discharge Data 2022 currently). I can analyze hospitals stays,
+                diagnoses, procedures, or medical information. I can generate visualizations and provide detailed insights.
               </p>
             </div>
             

@@ -14,7 +14,7 @@ import shutil
 import re
 
 # Import our healthcare data assistant
-from final_agentic_memory import HealthcareDataAgenticAssistant
+from final_agentic_memory_Cleaned import HealthcareDataAgenticAssistant
 
 app = FastAPI(title="Healthcare Chatbot API")
 
@@ -43,16 +43,7 @@ active_connections: Dict[str, WebSocket] = {}
 
 # Function to clean up plot references in the text
 def clean_plot_references(text):
-    # Handle the specific format showing in your interface
-    text = re.sub(r"Here is the plot for the top 5 diagnoses for patients over 70: /plots/[a-zA-Z0-9_.-]+\.png", 
-                 "Here is the plot for the top 5 diagnoses for patients over 70:", text)
-    
-    # More general patterns to catch /plots/ path formats
-    text = re.sub(r"for patients over 70: /plots/[a-zA-Z0-9_.-]+\.png", "for patients over 70:", text)
-    text = re.sub(r"for the top 5 diagnoses for patients over 70: /plots/[a-zA-Z0-9_.-]+\.png", 
-                 "for the top 5 diagnoses for patients over 70:", text)
-    
-    # Handle other common patterns
+    # Replace plot references with a cleaner message
     text = re.sub(r"The plot is saved as plots\\[a-zA-Z0-9_.-]+\.png\.?", "Here's the visualization:", text)
     text = re.sub(r"The plot is saved as plots/[a-zA-Z0-9_.-]+\.png\.?", "Here's the visualization:", text)
     text = re.sub(r"The plot is saved as .+\.png\.?", "Here's the visualization:", text)
@@ -64,11 +55,6 @@ def clean_plot_references(text):
     # Generic replacements
     text = re.sub(r": plots\\[a-zA-Z0-9_.-]+\.png", ":", text)
     text = re.sub(r": plots/[a-zA-Z0-9_.-]+\.png", ":", text)
-    text = re.sub(r": /plots/[a-zA-Z0-9_.-]+\.png", ":", text)
-    
-    # Special case for the exact pattern in the screenshot
-    text = re.sub(r"Here is the plot for the top 5 diagnoses for patients over 70: /plots/plot_[a-zA-Z0-9_.-]+\.png", 
-                 "Here is the plot for the top 5 diagnoses for patients over 70:", text)
     
     # Clean up any double spaces or awkward punctuation
     text = re.sub(r"\s\s+", " ", text)
@@ -179,11 +165,11 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str):
                     # Process through agent
                     response = await asyncio.to_thread(assistant.agent.run, input=query)
                     
-                    # Check if there's a plot in the response using improved pattern
+                    # Check if there's a plot in the response
                     plot_path = None
                     
-                    # Improved pattern to catch all plot path formats
-                    plot_match = re.search(r"(/plots/[a-zA-Z0-9_.-]+\.png|plots[/\\][a-zA-Z0-9_.-]+\.png)", response)
+                    # Look for plot path in the response using a more general pattern
+                    plot_match = re.search(r"(plots[/\\][a-zA-Z0-9_.-]+\.png)", response)
                     
                     if plot_match:
                         # Plot path directly found in the response
@@ -266,9 +252,9 @@ async def chat(request: Request):
             # Process through agent
             response = assistant.agent.run(input=query)
             
-        # Check if there's a plot in the response with improved pattern
+        # Check if there's a plot in the response
         plot_data = None
-        plot_match = re.search(r"(/plots/[a-zA-Z0-9_.-]+\.png|plots[/\\][a-zA-Z0-9_.-]+\.png)", response)
+        plot_match = re.search(r"(plots[/\\][a-zA-Z0-9_.-]+\.png)", response)
         
         if plot_match:
             # Plot path directly found in the response
