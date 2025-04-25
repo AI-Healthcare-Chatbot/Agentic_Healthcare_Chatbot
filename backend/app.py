@@ -14,7 +14,7 @@ import shutil
 import re
 
 # Import our healthcare data assistant
-from final_agentic_memory import HealthcareDataAgenticAssistant
+from final_agentic_memory_Cleaned import HealthcareDataAgenticAssistant
 
 app = FastAPI(title="Healthcare Chatbot API")
 
