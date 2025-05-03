@@ -22,7 +22,7 @@ An intelligent, agentic chatbot system designed to analyze healthcare data, gene
 - **Multimodal Output**: Text responses with integrated data visualizations
 - **Modern UI/UX**: Responsive, intuitive interface with professional styling
 
-## 🏗️ Architecture
+## 🏗️ Project Structure
 
 The Healthcare Data Assistant follows a modern, modular architecture:
 ```
