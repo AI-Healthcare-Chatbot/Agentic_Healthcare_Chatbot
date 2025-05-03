@@ -48,7 +48,7 @@ healthcare-chatbot/
 
 The Healthcare Data Assistant follows a sophisticated agentic architecture that enables intelligent, autonomous processing of healthcare queries:
 
-![System Architecture](Sys Archi.png)
+![System Architecture](Sys%20Archi.png)
 
 ### Key Components
 
