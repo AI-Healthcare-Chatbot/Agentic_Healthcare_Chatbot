@@ -25,6 +25,7 @@ An intelligent, agentic chatbot system designed to analyze healthcare data, gene
 ## 🏗️ Architecture
 
 The Healthcare Data Assistant follows a modern, modular architecture:
+```
 healthcare-chatbot/
 ├── backend/             # Python FastAPI backend
 │   ├── app.py           # Main FastAPI application
@@ -40,8 +41,8 @@ healthcare-chatbot/
 │       ├── services/    # API services
 │       └── styles/      # CSS styling
 └── vector/              # Vector database integration
-    └── database/        # Vector store implementation
-
+└── database/        # Vector store implementation
+```
 ## 🚀 Getting Started
 
 ### Prerequisites
