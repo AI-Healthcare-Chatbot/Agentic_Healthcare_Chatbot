@@ -43,6 +43,53 @@ healthcare-chatbot/
 └── vector/              # Vector database integration
 └── database/        # Vector store implementation
 ```
+
+## 🔄 System Architecture
+
+The Healthcare Data Assistant follows a sophisticated agentic architecture that enables intelligent, autonomous processing of healthcare queries:
+
+![System Architecture](path/to/SysArchi.png)
+
+### Key Components
+
+1. **User Interface** (React)
+   - React UI for displaying query results
+   - WebSocket client for real-time communication
+   - Support for visualizing text responses and plots
+
+2. **Backend Server** (FastAPI)
+   - WebSocket handler for bidirectional communication
+   - Application core for orchestrating the processing pipeline
+   - Plots directory for storing generated visualizations
+
+3. **Healthcare Assistant**
+   - **Query Understanding**: Analyzes natural language inputs to determine intent
+   - **Vector Search**: Retrieves relevant schema metadata from Pinecone
+   - **SQL Generation**: Converts natural language to optimized SQL queries
+   - **Database Query**: Executes queries against Snowflake database
+   - **Response Generation**: Formats database results into natural language
+   - **Plot Generator**: Creates visualizations based on query results
+
+4. **Data Sources**
+   - **Snowflake Database**: Primary source for healthcare data
+   - **Pinecone Vector DB**: Stores schema metadata for semantic search
+   - **Web Search**: Falls back to online sources when needed
+
+### Data Flow
+
+1. User submits a query through the React UI
+2. Query is transmitted to backend via WebSocket
+3. Application Core processes the request and passes it to Query Understanding
+4. Based on the query type:
+   - Relevant schema information is retrieved from Pinecone
+   - SQL is generated and executed against Snowflake
+   - Responses are generated in natural language
+   - Visualizations are created when appropriate
+5. Results are returned to the frontend via WebSocket
+6. User sees the result in the React UI interface
+
+This architecture enables seamless processing of complex healthcare queries, handling everything from data retrieval to visualization through an intelligent, multi-stage pipeline.
+
 ## 🚀 Getting Started
 
 ### Prerequisites
