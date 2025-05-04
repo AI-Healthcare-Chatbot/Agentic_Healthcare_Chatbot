@@ -9,7 +9,7 @@
 ![React](https://img.shields.io/badge/Frontend-React-61DAFB)
 ![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688)
 
-An intelligent, agentic chatbot system designed to analyze healthcare data, generate insights, and provide visualizations through natural language conversations. This project leverages advanced NLP, vector databases, and interactive data visualization to make complex healthcare information accessible.
+An intelligent, agentic chatbot system designed to analyze healthcare data, generate insights, and provide visualizations through natural language conversations. This project leverages advanced NLP, vector databases, and interactive data visualization to make complex healthcare information accessible. Built with FastAPI, React, Gemini AI and Pinecone vector search to bridge the gap between complex medical databases and human understanding.
 
 ## 🌟 Features
 
@@ -99,6 +99,13 @@ The Healthcare Data Assistant follows a sophisticated agentic architecture that 
    - Response stored in conversation history for context
 
 This architecture enables seamless processing of complex healthcare queries through an intelligent, single-agent system using specialized tools.
+
+## User Interface
+
+### Application Frontend
+
+<img width="1512" alt="image" src="https://github.com/user-attachments/assets/a5115317-b506-473c-b331-68b567106784" />
+
 
 ## 🚀 Getting Started
 
