@@ -77,18 +77,28 @@ The Healthcare Data Assistant follows a sophisticated agentic architecture that 
 
 ### Data Flow
 
-1. User submits a query through the React UI
-2. Query is transmitted to backend via WebSocket
-3. Application Core processes the request and passes it to Query Understanding
-4. Based on the query type:
-   - Relevant schema information is retrieved from Pinecone
-   - SQL is generated and executed against Snowflake
-   - Responses are generated in natural language
-   - Visualizations are created when appropriate
-5. Results are returned to the frontend via WebSocket
-6. User sees the result in the React UI interface
+1. **User Query Submission** 
+   - User enters natural language query through React UI
+   - Query transmitted to backend via WebSocket
 
-This architecture enables seamless processing of complex healthcare queries, handling everything from data retrieval to visualization through an intelligent, multi-stage pipeline.
+2. **Request Processing**
+   - Backend checks rate limiting (15 API calls/minute)
+   - System determines if query is conversational or data-focused
+   - For data queries, main agent orchestrates processing
+
+3. **Data Analysis Pipeline**
+   - Schema information retrieved from database
+   - Relevant metadata fetched via vector search in Pinecone
+   - SQL query generated and executed against Snowflake
+   - Results formatted into natural language response
+   - Visualizations created when appropriate
+
+4. **Response Delivery**
+   - Complete response package returned to frontend via WebSocket
+   - User sees results in React UI with any visualization links
+   - Response stored in conversation history for context
+
+This architecture enables seamless processing of complex healthcare queries through an intelligent, single-agent system using specialized tools.
 
 ## 🚀 Getting Started
 
