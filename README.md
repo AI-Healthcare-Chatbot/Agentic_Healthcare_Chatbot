@@ -227,6 +227,7 @@ Contributions are welcome! Please feel free to submit a Pull Request or open an 
 - Implement continuous learning from user interactions
 - Expand to support more healthcare data sources
 - Add user authentication and role-based access
+- Setting up containerized deployment with Kubernetes for scalability
 - Support data input through file uploads
 - Enhance visualization capabilities with interactive charts
 
