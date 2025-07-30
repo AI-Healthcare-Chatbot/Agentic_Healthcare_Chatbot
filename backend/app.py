@@ -36,7 +36,7 @@ app.mount("/plots", StaticFiles(directory="plots"), name="plots")
 
 # Initialize our assistant
 assistant = HealthcareDataAgenticAssistant()
-print("✅ Healthcare assistant initialized!")
+print("Healthcare assistant initialized!")
 
 # Store active connections
 active_connections: Dict[str, WebSocket] = {}
